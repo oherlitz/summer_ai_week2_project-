@@ -82,16 +82,55 @@ def depthFirstSearch(problem: SearchProblem):
     To get started, you might want to try some of these simple commands to
     understand the search problem that is being passed in:
     """
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    visited = []
+    goal_found = False
+    my_stack = util.Stack()
+    my_stack.push((problem.getStartState(), [], 0))
+    node = problem.getStartState()
+    while not goal_found:
+        
+        node, actions, cost = my_stack.pop()
+
+        if problem.isGoalState(node) == True:
+            goal_found = True
+            return actions
+        
+        else:
+            visited.append(node)
+
+            for node, action, cost in problem.getSuccessors(node):
+                if node not in visited:
+                    my_stack.push((node, actions + [action], cost))
+                    
+
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    visited = []
+    goal_found = False
+    my_queue = util.Queue()
+    my_queue.push((problem.getStartState(), [], 0))
+    node = problem.getStartState()
+    while not goal_found:
+        
+        node, actions, cost = my_queue.pop()
+
+        if problem.isGoalState(node) == True:
+            goal_found = True
+            return actions
+        
+        else:
+            visited.append(node)
+
+            for node, action, cost in problem.getSuccessors(node):
+                if (node not in visited):
+                    my_queue.push((node, actions + [action], cost))
+
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
